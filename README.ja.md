@@ -1,10 +1,9 @@
-
-[日本語のREADME.mdはこちら](https://github.com/scrpgil/nem.sh/master/README.ja.md)
-
 # nem.sh
-Shell Script Host CLI Tool Using nem's Transaction.
+nemのトランザクションを使用したシェルスクリプトホストCLIツール。  
 
 <img src="https://i.imgur.com/i5MzBpt.png" data-canonical-src="https://i.imgur.com/i5MzBpt.png" width="200"/>
+
+５月は重厚な作業が多かったので...。ただトランザクション読むだけのやつをやりたくなった...。
 
 ## Install
 
@@ -35,7 +34,7 @@ nem.sh set-alias --hash b37685ca16474b6897550f51f008c11b1e24e93e51b5543d066d9266
 
 ## Edit Config
 
-The path of the Config file is ($HOME/.nem.sh.json).
+Configファイルのパスは「$HOME/.nem.sh.json」です。
 
 ```
 {
@@ -51,4 +50,4 @@ The path of the Config file is ($HOME/.nem.sh.json).
 
 ## Add New Command
 
-If you want to add a new command, write it in the message of the transaction.
+新しいコマンドを追加する場合は、そのコマンドをトランザクションのメッセージに書き込みます。

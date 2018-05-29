@@ -5,34 +5,34 @@ nemのトランザクションを使用したシェルスクリプトホストCL
 
 ５月は重厚な作業が多かったので...。ただトランザクション読むだけのやつをやりたくなった...。
 
-## Install
+## インストール
 
 ```
 go get github.com/scrpgil/nem.sh
 ```
 
-## Run
+## 実行
 
 ```
-# run
+# 実行(Txハッシュから)
 nem.sh run --hash b37685ca16474b6897550f51f008c11b1e24e93e51b5543d066d9266d4e35008
 
-# run(use alias)
+# 実行(登録したエイリアスから)
 nem.sh run --alias hello
 
-# run(view shell scripts)
+# 実行(ソースコードの表示)
 nem.sh run --alias hello --view
 ```
 
 
-## SetAlias
+## エイリアスの設定
 
 ```
-# set-alias
+# 設定(txハッシュと名前のヒモ付)
 nem.sh set-alias --hash b37685ca16474b6897550f51f008c11b1e24e93e51b5543d066d9266d4e35008 --name hello
 ```
 
-## Edit Config
+## コンフィグファイルについて
 
 Configファイルのパスは「$HOME/.nem.sh.json」です。
 
@@ -48,6 +48,6 @@ Configファイルのパスは「$HOME/.nem.sh.json」です。
 }
 ```
 
-## Add New Command
+## 新しいコマンドの追加
 
 新しいコマンドを追加する場合は、そのコマンドをトランザクションのメッセージに書き込みます。

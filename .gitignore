@@ -1,0 +1,22 @@
+### Mac OS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+*~
+*.sw[mnpcod]
+*.log
+*.tmp
+*.tmp.*
+log.txt
+.vscode/
+
+# Binary
+nem.sh
+
+# Directory
+example
+ 
+# Thumbnails
+._*
+

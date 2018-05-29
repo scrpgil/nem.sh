@@ -22,6 +22,25 @@ nem.sh run --alias hello
 
 # 実行(ソースコードの表示)
 nem.sh run --alias hello --view
+Y='\033[0;33m'
+B='\033[1;34m'
+G='\033[1;36m'
+N='\033[0m'
+printf "Hello, nem.sh!\n"
+printf "       ${Y}sssssssssssss${N}\n"
+printf "  ${Y}ssssssssssssssss${N}  ${B}sssssssssss${N}\n"
+printf "${Y}ssssssssssssssss${N}   ${B}sssssssssssss${N}\n"
+printf "${Y}sssssssssssssss${N}  ${B}sssssssssssssss${N}\n"
+printf " ${Y}ssssssssssssss${N}  ${B}ssssssssssssss${N}\n"
+printf "  ${Y}sssssssssssss${N}   ${B}sssssssssssss${N}\n"
+printf "    ${Y}'''''''''${N}         ${B}ssssssss${N}\n"
+printf "   ${G}hssssssssssssssss${N}    ${B}sssss${N}\n"
+printf "    ${G}sssssssssssssssssss${N}  ${B}sss${N}\n"
+printf "      ${G}sssssssssssssssss${N}  ${B}ss${N}\n"
+printf "        ${G}sssssssssssssss${N}  \n"
+printf "          ${G}ssssssssssss${N}\n"
+printf "             ${G}sssssss${N}\n"
+printf "               ${G}sss${N}\n"
 ```
 
 

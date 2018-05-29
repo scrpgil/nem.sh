@@ -1,5 +1,5 @@
 
-[日本語のREADME.mdはこちら](https://github.com/scrpgil/nem.sh/master/README.ja.md)
+[日本語のREADME.mdはこちら](https://github.com/scrpgil/nem.sh/blob/master/README.ja.md)
 
 # nem.sh
 Shell Script Host CLI Tool Using nem's Transaction.

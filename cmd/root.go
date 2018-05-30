@@ -16,14 +16,12 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"os"
+	"path/filepath"
 )
-
-var cfgFile string
 
 var rootCmd = &cobra.Command{
 	Use:   "nem.sh",
@@ -59,7 +57,6 @@ var dhash map[string]interface{}
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.nem.sh.json)")
 	viper.SetDefault("node", "san.nem.ninja")
 	viper.SetDefault("port", "7890")
 	viper.SetDefault("protocol", "http")
@@ -70,17 +67,29 @@ func init() {
 }
 
 func initConfig() {
-	if cfgFile != "" {
-		viper.SetConfigFile(cfgFile)
-	} else {
-		home, err := homedir.Dir()
-		if err != nil {
+	home, err := homedir.Dir()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	path := filepath.Join(home, ".nem.sh")
+	viper.AddConfigPath(path)
+	viper.SetConfigType("json")
+	viper.SetConfigName("config")
+	if err := os.MkdirAll(path, 0777); err != nil {
+		fmt.Println(err)
+	}
+
+	configPath := filepath.Join(path, "config.json")
+	if Exists(configPath) == false {
+		if err := viper.WriteConfigAs(configPath); err != nil {
 			fmt.Println(err)
-			os.Exit(1)
 		}
-		viper.AddConfigPath(home)
-		viper.SetConfigType("json")
-		viper.SetConfigName(".nem.sh")
+	}
+	cashPath := filepath.Join(path, "cash")
+	if err := os.MkdirAll(cashPath, 0777); err != nil {
+		fmt.Println(err)
 	}
 
 	viper.AutomaticEnv()
@@ -88,4 +97,25 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		viper.ConfigFileUsed()
 	}
+}
+
+func Exists(name string) bool {
+	if _, err := os.Stat(name); err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+	}
+	return true
+}
+
+func GetFilePath(name string) string {
+	home, err := homedir.Dir()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	path := filepath.Join(home, ".nem.sh")
+	cashPath := filepath.Join(path, "cash")
+	filePath := filepath.Join(cashPath, name+".sh")
+	return filePath
 }

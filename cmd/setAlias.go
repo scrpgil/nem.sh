@@ -40,7 +40,7 @@ nem.sh set-alias --hash b37685ca16474b6897550f51f008c11b1e24e93e51b5543d066d9266
 			h[name] = aHash
 			viper.Set("alias", h)
 			home, _ := homedir.Dir()
-			err := viper.WriteConfigAs(home + "/.nem.sh.json")
+			err := viper.WriteConfigAs(home + "/.nem.sh/config.json")
 			if err != nil {
 				fmt.Println(err)
 			}

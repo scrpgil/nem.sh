@@ -15,8 +15,10 @@
 package cmd
 
 import (
+	"bytes"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/myndshft/nemgo"
 	"github.com/spf13/cobra"
@@ -24,6 +26,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os/exec"
+	"strings"
 )
 
 var hash string
@@ -47,44 +50,52 @@ var runCmd = &cobra.Command{
 		address := viper.GetString("address")
 		h := ""
 		if alias != "" {
-			tmp := viper.Get("alias")
-			if tmp != nil {
-				a := tmp.(map[string]interface{})
-				tmp2 := a[alias]
-				if tmp2 != nil {
-					h = a[alias].(string)
-				} else {
-					fmt.Println("alias not found.")
-					return
-				}
-			} else {
-				fmt.Println("alias not found.")
+			if tmp, err := getAlias(alias); err != nil {
+				fmt.Println(err)
 				return
+			} else {
+				h = tmp
 			}
 		} else {
 			h = hash
 		}
-		byteArray, _ := request(h)
-		t := &nemgo.TransactionMetadataPair{}
-		if err := json.Unmarshal(byteArray, t); err != nil {
-			fmt.Println("JSON Unmarshal error:", err)
-			return
-		}
-		if t.Meta.Hash.Data == h && t.Transaction.Recipient == address {
-			p := t.Transaction.Message.Payload
-			decoded, err := hex.DecodeString(p)
-			if err != nil {
-				fmt.Println(err)
+
+		// GetFilePath
+		filePath := GetFilePath(h)
+		if Exists(filePath) == false {
+			byteArray, _ := request(h)
+			t := &nemgo.TransactionMetadataPair{}
+			if err := json.Unmarshal(byteArray, t); err != nil {
+				fmt.Println("JSON Unmarshal error:", err)
+				return
 			}
-			if view == true {
-				fmt.Println(string(decoded))
-			} else {
-				out, err := exec.Command("sh", "-c", string(decoded)).Output()
+			if t.Meta.Hash.Data == h && t.Transaction.Recipient == address {
+				p := t.Transaction.Message.Payload
+				decoded, err := hex.DecodeString(p)
 				if err != nil {
 					fmt.Println(err)
 				}
-				fmt.Printf("%s", out)
+				var buf bytes.Buffer
+				buf.Write(decoded)
+				if err := ioutil.WriteFile(filePath, buf.Bytes(), 0644); err != nil {
+					fmt.Println("err:", err)
+				}
 			}
+		}
+
+		if view == true {
+			out, err := exec.Command("cat", filePath).Output()
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Printf("%s\n", out)
+		} else {
+			str := strings.Join(args, " ")
+			out, err := exec.Command("sh", filePath, str).Output()
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Printf("%s", out)
 		}
 	},
 }
@@ -109,4 +120,20 @@ func request(hash string) ([]byte, error) {
 
 	byteArray, err := ioutil.ReadAll(resp.Body)
 	return byteArray, err
+}
+
+func getAlias(key string) (string, error) {
+	tmp := viper.Get("alias")
+	if tmp != nil {
+		a := tmp.(map[string]interface{})
+		tmp2 := a[key]
+		if tmp2 != nil {
+			h := a[key].(string)
+			return h, nil
+		} else {
+			return "", errors.New("alias not found.")
+		}
+	} else {
+		return "", errors.New("alias not found.")
+	}
 }

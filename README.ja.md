@@ -17,6 +17,9 @@ go get github.com/scrpgil/nem.sh
 # 実行(Txハッシュから)
 nem.sh run --hash b37685ca16474b6897550f51f008c11b1e24e93e51b5543d066d9266d4e35008
 
+# run(引数の追加)
+nem.sh run --hash 666ade37fe3f09882b72645d262a015d68bc1230dc1d0f742bb098bc6567d682 20
+
 # 実行(登録したエイリアスから)
 nem.sh run --alias hello
 
@@ -53,7 +56,7 @@ nem.sh set-alias --hash b37685ca16474b6897550f51f008c11b1e24e93e51b5543d066d9266
 
 ## コンフィグファイルについて
 
-Configファイルのパスは「$HOME/.nem.sh.json」です。
+Configファイルのパスは「$HOME/.nem.sh/config.json」です。
 
 ```
 {

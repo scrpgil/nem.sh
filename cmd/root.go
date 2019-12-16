@@ -57,7 +57,7 @@ var dhash map[string]interface{}
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	viper.SetDefault("node", "san.nem.ninja")
+	viper.SetDefault("node", "alice7.nem.ninja")
 	viper.SetDefault("port", "7890")
 	viper.SetDefault("protocol", "http")
 	viper.SetDefault("address", "NCNUJTJ7HAYF6PV3ZPJIAYVJFTR4VT4FG4C4FRA5")

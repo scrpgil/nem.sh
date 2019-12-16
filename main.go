@@ -1,4 +1,4 @@
-// Copyright © 2018 xiaca@scrpgil <scraplbuild@gmai.com>
+// Copyright © 2018 @scrpgil <scraplbuild@gmai.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/xiaca/nem.sh/cmd"
+import "github.com/scrpgil/nem.sh/cmd"
 
 func main() {
 	cmd.Execute()
